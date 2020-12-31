@@ -66,6 +66,7 @@ def main():
     
     # Train and test.
     print('Train starts')
+    test_acc_best = 0
     for epoch in range(args.n_epoch):
         # Train and test a model.
         train_acc, train_loss = train(model, device, train_loader, criterion, optimizer)
@@ -76,17 +77,15 @@ def main():
 
             stdout_temp = 'epoch: {:>3}, train acc: {:<8}, train loss: {:<8}, test acc: {:<8}, test loss: {:<8}'
             print(stdout_temp.format(epoch+1, train_acc, train_loss, test_acc, test_loss))
+            if test_acc > test_acc_best:
+                test_acc_best = test_acc
+                model_ckpt_path = args.model_ckpt_path_temp.format(args.dataset_name, args.model_name, epoch+1)
+                torch.save(model.state_dict(), model_ckpt_path)
+                print('Saved a model checkpoint at {}'.format(model_ckpt_path))
 
         else:    
             stdout_temp = 'epoch: {:>3}, train acc: {:<8}, train loss: {:<8}' #, test acc: {:<8}, test loss: {:<8}'
             print(stdout_temp.format(epoch+1, train_acc, train_loss)) #, test_acc, test_loss))
-
-        # Save a model checkpoint.
-        if(epoch%args.save_model_interval == 0 or epoch+1 == args.n_epoch):
-            model_ckpt_path = args.model_ckpt_path_temp.format(args.dataset_name, args.model_name, epoch+1)
-            torch.save(model.state_dict(), model_ckpt_path)
-            print('Saved a model checkpoint at {}'.format(model_ckpt_path))
-            print('')
 
 
 def train(model, device, train_loader, criterion, optimizer):
