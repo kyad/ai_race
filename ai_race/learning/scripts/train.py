@@ -37,8 +37,8 @@ def main():
     test_dataframe = image_dataframe[:test_num]
     train_data = MyDataset(train_dataframe, transform=transforms.ToTensor())
     test_data = MyDataset(test_dataframe, transform=transforms.ToTensor())
-    train_loader = torch.utils.data.DataLoader(train_data, batch_size=20, shuffle=True)
-    test_loader = torch.utils.data.DataLoader(test_data, batch_size=20)
+    train_loader = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True)
+    test_loader = torch.utils.data.DataLoader(test_data, batch_size=args.batch_size)
     
     print('data set')
     # Set a model.
@@ -165,6 +165,7 @@ def parse_args():
     # Set arguments.
     arg_parser = argparse.ArgumentParser(description="Image Classification")
     
+    arg_parser.add_argument("--batch_size", type=int, default=20)
     arg_parser.add_argument("--dataset_name", type=str, default='sim_race')
     arg_parser.add_argument("--data_csv", type=str, default=os.environ['HOME'] + '/Images_from_rosbag/_2020-11-05-01-45-29_2/_2020-11-05-01-45-29.csv')
     arg_parser.add_argument("--model", type=str, default='resnet18')
