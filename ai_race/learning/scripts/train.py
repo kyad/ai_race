@@ -16,6 +16,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.metrics import f1_score
 from torchsummary import summary
+from mobilenetv2 import MobileNetV2
 from MyDataSet import MyDataset
 from samplenet import SampleNet, SimpleNet
 
@@ -44,6 +45,8 @@ def main():
     if args.model == 'resnet18':
         model = models.resnet18()
         model.fc = torch.nn.Linear(512, 3)
+    elif args.model == 'mobilenetv2':
+        model = MobileNetV2(num_classes=3)
     elif args.model == 'samplenet':
         model = SampleNet()
     elif args.model == 'simplenet':
