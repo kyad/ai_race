@@ -15,6 +15,7 @@ import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.metrics import f1_score
+from torchsummary import summary
 from MyDataSet import MyDataset
 from samplenet import SampleNet, SimpleNet
 
@@ -51,6 +52,7 @@ def main():
         raise NotImplementedError()
     model.train()
     model = model.to(device)
+    summary(model, (3, 320, 240))
 
     print('model set')
     # Set loss function and optimization function.
