@@ -68,6 +68,7 @@ def main():
     print('Train starts')
     test_acc_best = 0
     test_acc_best_epoch = 0
+    last_model_ckpt_path = None
     for epoch in range(args.n_epoch):
         # Train and test a model.
         train_acc, train_loss = train(model, device, train_loader, criterion, optimizer)
@@ -84,6 +85,9 @@ def main():
                 model_ckpt_path = args.model_ckpt_path_temp.format(args.dataset_name, args.model_name, epoch+1)
                 torch.save(model.state_dict(), model_ckpt_path)
                 print('Saved a model checkpoint at {}'.format(model_ckpt_path))
+                if last_model_ckpt_path is not None:
+                    os.remove(last_model_ckpt_path)
+                last_model_ckpt_path = model_ckpt_path
             else:
                 if (epoch + 1) - test_acc_best_epoch >= args.early_stopping:
                     break
