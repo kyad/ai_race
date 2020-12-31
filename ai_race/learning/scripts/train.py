@@ -67,6 +67,7 @@ def main():
     # Train and test.
     print('Train starts')
     test_acc_best = 0
+    test_acc_best_epoch = 0
     for epoch in range(args.n_epoch):
         # Train and test a model.
         train_acc, train_loss = train(model, device, train_loader, criterion, optimizer)
@@ -79,9 +80,13 @@ def main():
             print(stdout_temp.format(epoch+1, train_acc, train_loss, test_acc, test_loss))
             if test_acc > test_acc_best:
                 test_acc_best = test_acc
+                test_acc_best_epoch = epoch + 1
                 model_ckpt_path = args.model_ckpt_path_temp.format(args.dataset_name, args.model_name, epoch+1)
                 torch.save(model.state_dict(), model_ckpt_path)
                 print('Saved a model checkpoint at {}'.format(model_ckpt_path))
+            else:
+                if (epoch + 1) - test_acc_best_epoch >= args.early_stopping:
+                    break
 
         else:    
             stdout_temp = 'epoch: {:>3}, train acc: {:<8}, train loss: {:<8}' #, test acc: {:<8}, test loss: {:<8}'
@@ -167,6 +172,7 @@ def parse_args():
     arg_parser.add_argument("--batch_size", type=int, default=20)
     arg_parser.add_argument("--dataset_name", type=str, default='sim_race')
     arg_parser.add_argument("--data_csv", type=str, default=os.environ['HOME'] + '/Images_from_rosbag/_2020-11-05-01-45-29_2/_2020-11-05-01-45-29.csv')
+    arg_parser.add_argument("--early_stopping", type=int, default=3)
     arg_parser.add_argument("--model", type=str, default='resnet18')
     arg_parser.add_argument("--model_name", type=str, default='joycon_ResNet18')
     arg_parser.add_argument("--model_ckpt_dir", type=str, default=os.environ['HOME'] + '/work/experiments/models/checkpoints/')
