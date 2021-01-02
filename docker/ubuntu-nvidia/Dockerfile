@@ -47,7 +47,7 @@ RUN apt-get update && \
 	    openssh-server \
 	    x11-apps
 
-#RUN  git clone https://github.com/seigot/ai_race_data_sample /home/ubuntu/ai_race_data_sample
+RUN  git clone https://github.com/seigot/ai_race_data_sample /home/jetson/ai_race_data_sample
 #RUN  sudo ln -s /home/ubuntu /home/jetson
 
 # install ROS/package/python package/pyqt5.../pygame
@@ -56,7 +56,10 @@ RUN apt-get update && \
 RUN  touch /tmp/test
 #RUN  sudo apt upgrade -y libignition-math2
 # auto setup
-RUN  git clone https://github.com/seigot/ai_race /tmp/ai_race
+RUN  git clone https://github.com/kyad/ai_race /tmp/ai_race
+RUN  sed -ie 's@git clone http://github.com/seigot/ai_race@git clone https://github.com/kyad/ai_race@' /tmp/ai_race/scripts/setup/auto_setup_for_Linux.sh
+RUN  sed -ie 's@python -m pip install https://download.pytorch.org/whl/cu101/torch-1.4.0-cp27-cp27mu-linux_x86_64.whl@python -m pip install https://download.pytorch.org/whl/cu101/torch-1.4.0-cp27-cp27mu-linux_x86_64.whl --no-cache-dir@' /tmp/ai_race/scripts/setup/auto_setup_for_Linux.sh
+RUN  echo 'pip3 install -r /tmp/ai_race/ai_race/learning/scripts/requirements.txt' >> /tmp/ai_race/scripts/setup/auto_setup_for_Linux.sh
 RUN  /tmp/ai_race/scripts/setup/auto_setup_for_Linux.sh
 
 # gnome-terminal
