@@ -17,6 +17,13 @@ simplenet_trt.pth: checkpoints
 		--model simplenet \
 		--trt_model $@
 
+simplenet_trt_fp16.pth: checkpoints
+	python3 trt_conversion.py \
+		--fp16 \
+		--pretrained_model checkpoints/*.pth \
+		--model simplenet \
+		--trt_model $@
+
 vit-ckpt:
 	python3 train.py \
 		--test_interval 1 \
