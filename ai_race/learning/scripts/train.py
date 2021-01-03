@@ -19,6 +19,7 @@ from torchsummary import summary
 from mobilenetv2 import MobileNetV2
 from MyDataSet import MyDataset
 from samplenet import SampleNet, SimpleNet
+from vitnet import ViTNet
 
 
 def main():
@@ -51,6 +52,8 @@ def main():
         model = SampleNet()
     elif args.model == 'simplenet':
         model = SimpleNet()
+    elif args.model == 'vit':
+        model = ViTNet()
     else:
         raise NotImplementedError()
     model.train()
