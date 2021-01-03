@@ -1,0 +1,5 @@
+mobilenetv2.py:
+https://raw.githubusercontent.com/pytorch/vision/master/torchvision/models/mobilenetv2.py
+
+vit_pytorch.py:
+https://raw.githubusercontent.com/lucidrains/vit-pytorch/main/vit_pytorch/vit_pytorch.py
