@@ -3,3 +3,6 @@ https://raw.githubusercontent.com/pytorch/vision/master/torchvision/models/mobil
 
 vit_pytorch.py:
 https://raw.githubusercontent.com/lucidrains/vit-pytorch/main/vit_pytorch/vit_pytorch.py
+
+vit_pytorch MNIST sample:
+https://towardsdatascience.com/a-demonstration-of-using-vision-transformers-in-pytorch-mnist-handwritten-digit-recognition-407eafbc15b0
