@@ -1,1 +1,2 @@
+einops==0.3.0
 torchsummary==1.5.1
