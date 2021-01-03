@@ -27,3 +27,9 @@ vit-ckpt:
 		--model vit \
 		--model_ckpt_dir $@ \
 		--model_ckpt_path_temp $@/{}_{}_epoch{}.pth
+
+vit_trt.pth: vit-ckpt
+	python3 trt_conversion.py \
+		--pretrained_model $</*.pth \
+		--model vit \
+		--trt_model $@

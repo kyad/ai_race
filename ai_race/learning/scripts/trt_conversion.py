@@ -20,6 +20,7 @@ import cv2
 from cv_bridge import CvBridge
 
 from samplenet import SampleNet, SimpleNet
+from vitnet import ViTNet
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -32,6 +33,8 @@ def init_inference():
         model = SampleNet()
     elif args.model == 'simplenet':
         model = SimpleNet()
+    elif args.model == 'vit':
+        model = ViTNet()
     else:
         raise NotImplementedError()
     model.eval()
