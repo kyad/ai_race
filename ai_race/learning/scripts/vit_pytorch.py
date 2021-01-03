@@ -87,8 +87,15 @@ class Transformer(nn.Module):
 class ViT(nn.Module):
     def __init__(self, *, image_size, patch_size, num_classes, dim, depth, heads, mlp_dim, pool = 'cls', channels = 3, dim_head = 64, dropout = 0., emb_dropout = 0.):
         super().__init__()
-        assert image_size % patch_size == 0, 'Image dimensions must be divisible by the patch size.'
-        num_patches = (image_size // patch_size) ** 2
+        if type(image_size) is int:
+            assert image_size % patch_size == 0, 'Image dimensions must be divisible by the patch size.'
+            num_patches = (image_size // patch_size) ** 2
+        elif len(image_size) == 2:
+            assert image_size[0] % patch_size == 0, 'Image dimensions must be divisible by the patch size.'
+            assert image_size[1] % patch_size == 0, 'Image dimensions must be divisible by the patch size.'
+            num_patches = (image_size[0] // patch_size) * (image_size[1] // patch_size)
+        else:
+            raise NotImplementedError()
         patch_dim = channels * patch_size ** 2
         assert num_patches > MIN_NUM_PATCHES, f'your number of patches ({num_patches}) is way too small for attention to be effective (at least 16). Try decreasing your patch size'
         assert pool in {'cls', 'mean'}, 'pool type must be either cls (cls token) or mean (mean pooling)'
