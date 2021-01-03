@@ -66,6 +66,10 @@ RUN  /tmp/ai_race/scripts/setup/auto_setup_for_Linux.sh
 RUN apt-get install -yq dbus-x11; \
     echo 'eval `dbus-launch --sh-syntax`' >> /home/jetson/.bashrc
 
+RUN pip3 install ipython
+RUN apt install -y tig
+RUN echo "(global-set-key \"\\C-h\" 'delete-backward-char)" > /home/jetson/.emacs
+
 # command
 COPY start.sh  /tmp/.
 RUN  chmod +x /tmp/start.sh
