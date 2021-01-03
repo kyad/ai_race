@@ -43,8 +43,7 @@ def init_inference():
     model = model.cuda()
     x = torch.ones((1, 3, 240, 320)).cuda()
     from torch2trt import torch2trt
-    #model_trt = torch2trt(model, [x], max_batch_size=100, fp16_mode=True)
-    model_trt = torch2trt(model, [x], max_batch_size=100)
+    model_trt = torch2trt(model, [x], max_batch_size=100, fp16_mode=args.fp16)
     torch.save(model_trt.state_dict(), args.trt_model)
     #torch.save(model_trt.state_dict(), 'road_following_model_trt_half.pth')
 
@@ -53,6 +52,7 @@ def parse_args():
     # Set arguments.
     arg_parser = argparse.ArgumentParser(description="Autonomous with inference")
 	
+    arg_parser.add_argument("--fp16", action='store_true')
     arg_parser.add_argument("--model", type=str, default='resnet18')
     arg_parser.add_argument("--pretrained_model", type=str)
     arg_parser.add_argument("--trt_model", type=str, default='road_following_model_trt.pth' )
