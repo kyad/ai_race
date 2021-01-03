@@ -11,6 +11,12 @@ checkpoints:
 		--model_ckpt_dir checkpoints \
 		--model_ckpt_path_temp checkpoints/{}_{}_epoch{}.pth
 
+simplenet_trt.pth: checkpoints
+	python3 trt_conversion.py \
+		--pretrained_model checkpoints/*.pth \
+		--model simplenet \
+		--trt_model $@
+
 vit-ckpt:
 	python3 train.py \
 		--test_interval 1 \
