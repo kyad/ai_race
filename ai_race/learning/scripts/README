@@ -6,3 +6,6 @@ https://raw.githubusercontent.com/lucidrains/vit-pytorch/main/vit_pytorch/vit_py
 
 vit_pytorch MNIST sample:
 https://towardsdatascience.com/a-demonstration-of-using-vision-transformers-in-pytorch-mnist-handwritten-digit-recognition-407eafbc15b0
+
+Positional encoding:
+https://pytorch.org/tutorials/beginner/transformer_tutorial.html

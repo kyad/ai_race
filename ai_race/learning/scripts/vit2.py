@@ -1,8 +1,26 @@
+import math
 import torch
 import torch.nn as nn
 
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model, dropout=0.1, max_len=5000):
+        super(PositionalEncoding, self).__init__()
+        self.dropout = nn.Dropout(p=dropout)
+
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(0).transpose(0, 1)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        x = x + self.pe[:x.size(0), :]
+        return self.dropout(x)
+
 class ViT2(nn.Module):
-    def __init__(self, image_size, patch_size, num_classes, dim, depth, heads, mlp_dim, pool='cls', channels=3, dropout=0., emb_dropout=0.):
+    def __init__(self, image_size, patch_size, num_classes, dim, depth, heads, mlp_dim, pool='cls', channels=3, dropout=0., emb_dropout=0., train_pos_encoding=False):
         super().__init__()
         if type(image_size) is int:
             assert image_size % patch_size == 0
@@ -18,7 +36,11 @@ class ViT2(nn.Module):
 
         self.patch_size = patch_size
 
-        self.pos_embedding = nn.Parameter(torch.randn(1, num_patches + 1, dim))
+        self.train_pos_encoding = train_pos_encoding
+        if self.train_pos_encoding:
+            self.pos_embedding = nn.Parameter(torch.randn(1, num_patches + 1, dim))
+        else:
+            self.positional_encoding = PositionalEncoding(dim, dropout, max_len=num_patches+1)
         self.patch_to_embedding = nn.Linear(patch_dim, dim)
         self.cls_token = nn.Parameter(torch.randn(1, 1, dim))
         self.dropout = nn.Dropout(emb_dropout)
@@ -53,10 +75,13 @@ class ViT2(nn.Module):
         cls_tokens = self.cls_token.repeat(b, 1, 1)
         x = torch.cat((cls_tokens, x), dim=1)  # b * (n + 1) * dim
 
-        x += self.pos_embedding[:, :(n+1)]
-        x = self.dropout(x)
+        if self.train_pos_encoding:
+            x += self.pos_embedding[:, :(n+1)]
+            x = self.dropout(x)
 
         x = torch.transpose(x, 0, 1)  # (n + 1) * b * dim
+        if not self.train_pos_encoding:
+            x = self.positional_encoding(x)
         x = self.transformer_encoder(x)  # (n + 1) * b * dim
         x = torch.transpose(x, 0, 1)  # b * (n + 1) * dim
 
