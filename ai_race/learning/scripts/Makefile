@@ -40,3 +40,20 @@ vit_trt.pth: vit-ckpt
 		--pretrained_model $</*.pth \
 		--model vit \
 		--trt_model $@
+
+vit2-ckpt:
+	python3 train.py \
+		--test_interval 1 \
+		--batch_size 128 \
+		--data_csv $(HOME)/Images_from_rosbag/data-20201231.csv \
+		--dataset_name data-20201231 \
+		--model_name vit2 \
+		--model vit2 \
+		--model_ckpt_dir $@ \
+		--model_ckpt_path_temp $@/{}_{}_epoch{}.pth
+
+vit2_trt.pth: vit2-ckpt
+	python3 trt_conversion.py \
+		--pretrained_model $</*.pth \
+		--model vit2 \
+		--trt_model $@
