@@ -24,6 +24,54 @@ simplenet_trt_fp16.pth: checkpoints
 		--model simplenet \
 		--trt_model $@
 
+20210105-simplenet-ckpt:
+	python3 train.py \
+		--test_interval 1 \
+		--batch_size 128 \
+		--data_csv $(HOME)/Images_from_rosbag/data-20210105/data-20210105.csv \
+		--dataset_name data-20210105 \
+		--model_name simplenet \
+		--model simplenet \
+		--model_ckpt_dir $@ \
+		--model_ckpt_path_temp $@/{}_{}_epoch{}.pth
+
+20210105-simplenet_trt.pth: 20210105-simplenet-ckpt
+	python3 trt_conversion.py \
+		--pretrained_model $</*.pth \
+		--model simplenet \
+		--trt_model $@
+
+20210105-simplenet_trt_fp16.pth: 20210105-simplenet-ckpt
+	python3 trt_conversion.py \
+		--fp16 \
+		--pretrained_model $</*.pth \
+		--model simplenet \
+		--trt_model $@
+
+20210105a-simplenet-ckpt:
+	python3 train.py \
+		--test_interval 1 \
+		--batch_size 128 \
+		--data_csv $(HOME)/Images_from_rosbag/data-20210105/data-20210105_A.csv \
+		--dataset_name data-20210105 \
+		--model_name simplenet \
+		--model simplenet \
+		--model_ckpt_dir $@ \
+		--model_ckpt_path_temp $@/{}_{}_epoch{}.pth
+
+20210105a-simplenet_trt.pth: 20210105a-simplenet-ckpt
+	python3 trt_conversion.py \
+		--pretrained_model $</*.pth \
+		--model simplenet \
+		--trt_model $@
+
+20210105a-simplenet_trt_fp16.pth: 20210105a-simplenet-ckpt
+	python3 trt_conversion.py \
+		--fp16 \
+		--pretrained_model $</*.pth \
+		--model simplenet \
+		--trt_model $@
+
 vit-ckpt:
 	python3 train.py \
 		--test_interval 1 \
