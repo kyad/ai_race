@@ -58,6 +58,12 @@ def main():
         model = ViT2Net()
     else:
         raise NotImplementedError()
+
+    from ptflops import get_model_complexity_info
+    macs, params = get_model_complexity_info(model, (3, 320, 240), as_strings=True, print_per_layer_stat=True, verbose=True)
+    print('{:<30}  {:<8}'.format('Computational complexity: ', macs))
+    print('{:<30}  {:<8}'.format('Number of parameters: ', params))
+
     model.train()
     model = model.to(device)
     summary(model, (3, 320, 240))
