@@ -53,7 +53,7 @@ simplenet_trt_fp16.pth: checkpoints
 		--test_interval 1 \
 		--batch_size 128 \
 		--data_csv $(HOME)/Images_from_rosbag/data-20210105/data-20210105_A.csv \
-		--dataset_name data-20210105 \
+		--dataset_name data-20210105a \
 		--model_name simplenet \
 		--model simplenet \
 		--model_ckpt_dir $@ \
