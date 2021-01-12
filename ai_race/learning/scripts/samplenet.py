@@ -33,8 +33,10 @@ class SampleNet(nn.Module):
         return x
 
 class SimpleNet(nn.Module):
-    def __init__(self):
+    def __init__(self, init_maxpool=1):
         super(SimpleNet, self).__init__()
+        self.init_maxpool = init_maxpool
+
         self.conv1 = nn.Conv2d(3, 16, 3, 1, padding=1)
         self.conv2 = nn.Conv2d(16, 16, 3, 1, padding=1)
         self.conv3 = nn.Conv2d(16, 16, 3, 1, padding=1)
@@ -50,8 +52,8 @@ class SimpleNet(nn.Module):
         nn.init.kaiming_normal_(self.fc1.weight)
 
     def forward(self, x):
-        x = nn.MaxPool2d(kernel_size=2)(x)
-        #x = nn.MaxPool2d(kernel_size=2)(x)
+        for i in range(self.init_maxpool):
+            x = nn.MaxPool2d(kernel_size=2)(x)
         x = self.conv1(x)
         x = F.relu(x)
         x = nn.MaxPool2d(kernel_size=2)(x)
