@@ -27,10 +27,11 @@ simplenet_trt_fp16.pth: checkpoints
 20210105-simplenet-ckpt:
 	python3 train.py \
 		--test_interval 1 \
-		--batch_size 128 \
+		--batch_size 20 \
 		--data_csv $(HOME)/Images_from_rosbag/data-20210105/data-20210105.csv \
 		--dataset_name data-20210105 \
 		--model_name simplenet \
+		--early_stopping 5 \
 		--model simplenet \
 		--model_ckpt_dir $@ \
 		--model_ckpt_path_temp $@/{}_{}_epoch{}.pth
