@@ -1,0 +1,17 @@
+batch:  10/28 , train acc: 0.904545, train loss: 0.004462
+batch:  20/28 , train acc: 0.890476, train loss: 0.009896
+confusion_matrix
+[[43  9]
+ [ 3 81]]
+classification_report
+              precision    recall  f1-score   support
+
+           1       0.93      0.83      0.88        52
+           2       0.90      0.96      0.93        84
+
+    accuracy                           0.91       136
+   macro avg       0.92      0.90      0.90       136
+weighted avg       0.91      0.91      0.91       136
+
+epoch:   7, train acc: 0.893382, train loss: 0.013174, test acc: 0.911765, test loss: 0.012917
+Saved a model checkpoint at 20210105a-simplenet-ckpt/data-20210105a_simplenet_epoch7.pth
