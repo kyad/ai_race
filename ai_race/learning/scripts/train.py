@@ -11,6 +11,7 @@ import os
 import io
 import argparse
 import numpy as np
+import optuna
 import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
@@ -22,7 +23,8 @@ from samplenet import SampleNet, SimpleNet, SimpleNet2
 from vitnet import ViTNet, ViT2Net
 
 
-def main():
+def main(trial):
+    print('optuna trial={}'.format(trial.number))
     # Parse arguments.
     args = parse_args()
     
@@ -95,7 +97,7 @@ def main():
             if test_acc > test_acc_best:
                 test_acc_best = test_acc
                 test_acc_best_epoch = epoch + 1
-                model_ckpt_path = args.model_ckpt_path_temp.format(args.dataset_name, args.model_name, epoch+1)
+                model_ckpt_path = args.model_ckpt_path_temp.format(args.dataset_name, args.model_name, trial.number, epoch+1)
                 torch.save(model.state_dict(), model_ckpt_path)
                 print('Saved a model checkpoint at {}'.format(model_ckpt_path))
                 if last_model_ckpt_path is not None:
@@ -108,6 +110,8 @@ def main():
         else:    
             stdout_temp = 'epoch: {:>3}, train acc: {:<8}, train loss: {:<8}' #, test acc: {:<8}, test loss: {:<8}'
             print(stdout_temp.format(epoch+1, train_acc, train_loss)) #, test_acc, test_loss))
+    print('trial={} test_acc_best={} test_acc_best_epoch={}'.format(trial.number, test_acc_best, test_acc_best_epoch))
+    return test_acc_best
 
 
 def train(model, device, train_loader, criterion, optimizer):
@@ -213,6 +217,8 @@ def parse_args():
 
 
 if __name__ == "__main__":
-    main()
+    study = optuna.create_study()
+    study.optimize(main, n_trials=100)
+    print('best_params={}'.format(study.best_params))
     print("finished successfully.")
     os._exit(0)

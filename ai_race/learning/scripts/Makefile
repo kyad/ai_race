@@ -84,7 +84,7 @@ simplenet_trt_fp16.pth: checkpoints
 		--model_name simplenet2 \
 		--model simplenet2 \
 		--model_ckpt_dir $@ \
-		--model_ckpt_path_temp $@/{}_{}_epoch{}.pth
+		--model_ckpt_path_temp $@/{}_{}_trial{}_epoch{}.pth
 
 20210105a-simplenet2_trt_fp16.pth: 20210105a-simplenet2-ckpt
 	python3 trt_conversion.py \
