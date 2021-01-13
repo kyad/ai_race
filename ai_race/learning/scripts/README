@@ -12,3 +12,6 @@ https://pytorch.org/tutorials/beginner/transformer_tutorial.html
 
 20210105a-simplenet-ckpt, 20210105a-simplenet_trt_fp16.pth
 LAP: 31+1/3, CourseOut: 0, Recovery: 0
+
+20210105a-simplenet2-ckpt, 20210105a-simplenet2_trt_fp16.pth
+LAP: 29+1/6, CourseOut: 4, Recovery: 3
