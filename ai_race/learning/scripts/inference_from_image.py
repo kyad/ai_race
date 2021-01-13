@@ -39,7 +39,7 @@ def init_inference():
     elif args.model == 'samplenet':
         model = SampleNet()
     elif args.model == 'simplenet':
-        model = SimpleNet()
+        model = SimpleNet(init_maxpool=2, use_gap=False)
     else:
         raise NotImplementedError()
     model.eval()

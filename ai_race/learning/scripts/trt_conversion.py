@@ -32,7 +32,7 @@ def init_inference():
     elif args.model == 'samplenet':
         model = SampleNet()
     elif args.model == 'simplenet':
-        model = SimpleNet()
+        model = SimpleNet(init_maxpool=2, use_gap=False)
     elif args.model == 'vit':
         model = ViTNet()
     elif args.model == 'vit2':
