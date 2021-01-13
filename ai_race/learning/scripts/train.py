@@ -18,7 +18,7 @@ from sklearn.metrics import f1_score
 from torchsummary import summary
 from mobilenetv2 import MobileNetV2
 from MyDataSet import MyDataset
-from samplenet import SampleNet, SimpleNet
+from samplenet import SampleNet, SimpleNet, SimpleNet2
 from vitnet import ViTNet, ViT2Net
 
 
@@ -52,6 +52,8 @@ def main():
         model = SampleNet()
     elif args.model == 'simplenet':
         model = SimpleNet(init_maxpool=2, use_gap=False)
+    elif args.model == 'simplenet2':
+        model = SimpleNet2()
     elif args.model == 'vit':
         model = ViTNet()
     elif args.model == 'vit2':
