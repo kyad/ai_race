@@ -74,6 +74,25 @@ simplenet_trt_fp16.pth: checkpoints
 		--model simplenet \
 		--trt_model $@
 
+20210105a-simplenet2-ckpt:
+	python3 train.py \
+		--test_interval 1 \
+		--batch_size 20 \
+		--data_csv $(HOME)/Images_from_rosbag/data-20210105/data-20210105_A.csv \
+		--dataset_name data-20210105a \
+		--early_stopping 5 \
+		--model_name simplenet2 \
+		--model simplenet2 \
+		--model_ckpt_dir $@ \
+		--model_ckpt_path_temp $@/{}_{}_epoch{}.pth
+
+20210105a-simplenet2_trt_fp16.pth: 20210105a-simplenet2-ckpt
+	python3 trt_conversion.py \
+		--fp16 \
+		--pretrained_model $</*.pth \
+		--model simplenet2 \
+		--trt_model $@
+
 vit-ckpt:
 	python3 train.py \
 		--test_interval 1 \
