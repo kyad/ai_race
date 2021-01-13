@@ -25,7 +25,7 @@ from PIL import Image as IMG
 import cv2
 from cv_bridge import CvBridge
 
-from samplenet import SampleNet, SimpleNet
+from samplenet import SampleNet, SimpleNet, SimpleNet2
 
 model = None
 
@@ -40,6 +40,8 @@ def init_inference():
         model = SampleNet()
     elif args.model == 'simplenet':
         model = SimpleNet(init_maxpool=2, use_gap=False)
+    elif args.model == 'simplenet2':
+        model = SimpleNet2()
     else:
         raise NotImplementedError()
     model.eval()

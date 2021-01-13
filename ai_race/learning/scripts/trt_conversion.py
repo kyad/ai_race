@@ -19,7 +19,7 @@ from torch2trt import TRTModule
 import cv2
 from cv_bridge import CvBridge
 
-from samplenet import SampleNet, SimpleNet
+from samplenet import SampleNet, SimpleNet, SimpleNet2
 from vitnet import ViTNet, ViT2Net
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -33,6 +33,8 @@ def init_inference():
         model = SampleNet()
     elif args.model == 'simplenet':
         model = SimpleNet(init_maxpool=2, use_gap=False)
+    elif args.model == 'simplenet2':
+        model = SimpleNet2()
     elif args.model == 'vit':
         model = ViTNet()
     elif args.model == 'vit2':
