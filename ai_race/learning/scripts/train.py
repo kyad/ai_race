@@ -8,6 +8,7 @@ import torchvision.transforms as transforms
 import torchvision.models as models
 
 import os
+import sys
 import io
 import argparse
 import numpy as np
@@ -21,6 +22,11 @@ from mobilenetv2 import MobileNetV2
 from MyDataSet import MyDataset
 from samplenet import SampleNet, SimpleNet, SimpleNet2
 from vitnet import ViTNet, ViT2Net
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../config")
+import learning_config
+
+DISCRETIZATION = learning_config.Discretization_number
 
 
 def main(trial):
@@ -47,13 +53,13 @@ def main(trial):
     # Set a model.
     if args.model == 'resnet18':
         model = models.resnet18()
-        model.fc = torch.nn.Linear(512, 3)
+        model.fc = torch.nn.Linear(512, DISCRETIZATION)
     elif args.model == 'mobilenetv2':
         model = MobileNetV2(num_classes=3)
     elif args.model == 'samplenet':
-        model = SampleNet()
+        model = SampleNet(DISCRETIZATION)
     elif args.model == 'simplenet':
-        model = SimpleNet(init_maxpool=2, use_gap=False)
+        model = SimpleNet(DISCRETIZATION, init_maxpool=2, use_gap=False)
     elif args.model == 'simplenet2':
         model = SimpleNet2()
     elif args.model == 'vit':
