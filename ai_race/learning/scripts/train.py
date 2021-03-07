@@ -116,7 +116,11 @@ def main(trial):
         else:    
             stdout_temp = 'epoch: {:>3}, train acc: {:<8}, train loss: {:<8}' #, test acc: {:<8}, test loss: {:<8}'
             print(stdout_temp.format(epoch+1, train_acc, train_loss)) #, test_acc, test_loss))
-    print('trial={} test_acc_best={} test_acc_best_epoch={}'.format(trial.number, test_acc_best, test_acc_best_epoch))
+    msg = 'trial={} test_acc_best={} test_acc_best_epoch={}'.format(trial.number, test_acc_best, test_acc_best_epoch)
+    print(msg)
+    with open(os.path.join(args.model_ckpt_dir, 'optuna.log'), 'a') as f:
+        f.write(msg + '\n')
+
     return test_acc_best
 
 
