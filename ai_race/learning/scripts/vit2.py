@@ -21,7 +21,7 @@ class PositionalEncoding(nn.Module):
 
 class ViT2(nn.Module):
     def __init__(self, image_size, patch_size, num_classes, dim, depth, heads, mlp_dim, pool='cls', channels=3, dropout=0., emb_dropout=0., train_pos_encoding=False):
-        super().__init__()
+        super(ViT2, self).__init__()
         if type(image_size) is int:
             assert image_size % patch_size == 0
             num_patches = (image_size // patch_size) ** 2
