@@ -21,7 +21,7 @@ from torchsummary import summary
 from mobilenetv2 import MobileNetV2
 from MyDataSet import MyDataset
 from samplenet import SampleNet, SimpleNet, SimpleNet2
-from vitnet import ViTNet, ViT2Net
+from vitnet import ViT2Net
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../config")
 import learning_config
@@ -62,8 +62,6 @@ def main(trial):
         model = SimpleNet(DISCRETIZATION, init_maxpool=2, use_gap=False)
     elif args.model == 'simplenet2':
         model = SimpleNet2()
-    elif args.model == 'vit':
-        model = ViTNet()
     elif args.model == 'vit2':
         model = ViT2Net()
     else:
