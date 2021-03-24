@@ -10,10 +10,10 @@ class ViT2Net(nn.Module):
             image_size=(240, 320),
             patch_size=40,
             num_classes=3,
-            dim=128,
-            depth=3,
-            heads=8,
-            mlp_dim=256,
+            dim=32,
+            depth=1,
+            heads=2,
+            mlp_dim=32,
         )
 
     def forward(self, x):
