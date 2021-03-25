@@ -21,7 +21,7 @@ from torchsummary import summary
 from mobilenetv2 import MobileNetV2
 from MyDataSet import MyDataset
 from samplenet import SampleNet, SimpleNet, SimpleNet2
-from vitnet import ViT2Net
+import vitnet
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../config")
 import learning_config
@@ -63,7 +63,11 @@ def main(trial):
     elif args.model == 'simplenet2':
         model = SimpleNet2()
     elif args.model == 'vit2':
-        model = ViT2Net()
+        model = vitnet.ViT2Net()
+    elif args.model == 'vit2s':
+        model = vitnet.ViT2NetS()
+    elif args.model == 'vit2m':
+        model = vitnet.ViT2NetM()
     else:
         raise NotImplementedError()
 

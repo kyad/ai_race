@@ -26,7 +26,7 @@ import cv2
 from cv_bridge import CvBridge
 
 from samplenet import SampleNet, SimpleNet, SimpleNet2
-from vitnet import ViT2Net
+import vitnet
 
 import sys
 
@@ -51,7 +51,11 @@ def init_inference():
     elif args.model == 'simplenet2':
         model = SimpleNet2()
     elif args.model == 'vit2':
-        model = ViT2Net()
+        model = vitnet.ViT2Net()
+    elif args.model == 'vit2s':
+        model = vitnet.ViT2NetS()
+    elif args.model == 'vit2m':
+        model = vitnet.ViT2NetM()
     else:
         raise NotImplementedError()
     model.eval()
