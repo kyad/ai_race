@@ -20,7 +20,7 @@ from sklearn.metrics import f1_score
 from torchsummary import summary
 from mobilenetv2 import MobileNetV2
 from MyDataSet import MyDataset
-from samplenet import SampleNet, SimpleNet, SimpleNet2
+from samplenet import SampleNet, SimpleNet, SimpleNetS, SimpleNetXS
 import vitnet
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../config")
@@ -59,9 +59,11 @@ def main(trial):
     elif args.model == 'samplenet':
         model = SampleNet(DISCRETIZATION)
     elif args.model == 'simplenet':
-        model = SimpleNet(DISCRETIZATION, init_maxpool=2, use_gap=False)
-    elif args.model == 'simplenet2':
-        model = SimpleNet2()
+        model = SimpleNet(DISCRETIZATION)
+    elif args.model == 'simplenets':
+        model = SimpleNetS(DISCRETIZATION)
+    elif args.model == 'simplenetxs':
+        model = SimpleNetXS()
     elif args.model == 'vit2':
         model = vitnet.ViT2Net()
     elif args.model == 'vit2s':

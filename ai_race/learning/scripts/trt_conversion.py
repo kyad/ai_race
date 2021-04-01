@@ -19,7 +19,7 @@ from torch2trt import TRTModule
 import cv2
 from cv_bridge import CvBridge
 
-from samplenet import SampleNet, SimpleNet, SimpleNet2
+from samplenet import SampleNet, SimpleNet, SimpleNetS, SimpleNetXS
 from vitnet import ViT2Net
 
 import sys
@@ -39,9 +39,11 @@ def init_inference():
     elif args.model == 'samplenet':
         model = SampleNet(DISCRETIZATION)
     elif args.model == 'simplenet':
-        model = SimpleNet(DISCRETIZATION, init_maxpool=2, use_gap=False)
-    elif args.model == 'simplenet2':
-        model = SimpleNet2()
+        model = SimpleNet(DISCRETIZATION)
+    elif args.model == 'simplenets':
+        model = SimpleNetS(DISCRETIZATION)
+    elif args.model == 'simplenetxs':
+        model = SimpleNetXS()
     elif args.model == 'vit2':
         model = ViT2Net()
     else:

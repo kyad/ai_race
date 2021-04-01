@@ -32,9 +32,9 @@ class SampleNet(nn.Module):
         x = self.fc2(x)
         return x
 
-class SimpleNet(nn.Module):
-    def __init__(self, DISCRETIZATION=3, init_maxpool=1, use_gap=True):
-        super(SimpleNet, self).__init__()
+class SimpleNetS(nn.Module):
+    def __init__(self, DISCRETIZATION=3, init_maxpool=2, use_gap=False):
+        super(SimpleNetS, self).__init__()
         self.init_maxpool = init_maxpool
         self.use_gap = use_gap
 
@@ -89,9 +89,9 @@ class SimpleNet(nn.Module):
         x = self.fc1(x)
         return x
 
-class SimpleNet2(nn.Module):
+class SimpleNetXS(nn.Module):
     def __init__(self):
-        super(SimpleNet2, self).__init__()
+        super(SimpleNetXS, self).__init__()
         self.conv1 = nn.Conv2d(3, 4, 3, 1, padding=1)
         self.conv2 = nn.Conv2d(4, 4, 3, 1, padding=1)
         self.conv3 = nn.Conv2d(4, 4, 3, 1, padding=1)
