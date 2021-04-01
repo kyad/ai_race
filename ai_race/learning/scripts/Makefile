@@ -203,3 +203,14 @@ vit2_trt.pth: vit2-ckpt
 		--model vit2m \
 		--model_ckpt_dir $@ \
 		--model_ckpt_path_temp $@/{}_{}_trial{}_epoch{}.pth
+
+20210301_25-vit2l-ckpt:
+	python3 train.py \
+		--test_interval 1 \
+		--batch_size 128 \
+		--data_csv $(HOME)/Images_from_rosbag/data-20210325/data-20210301_25.csv \
+		--dataset_name data-20210301_25 \
+		--model_name vit2l \
+		--model vit2l \
+		--model_ckpt_dir $@ \
+		--model_ckpt_path_temp $@/{}_{}_trial{}_epoch{}.pth
