@@ -100,3 +100,23 @@ class ViT2NetXL(nn.Module):
         x = self.bn(x)
         x = self.vit2(x)
         return x
+
+
+class ViT2NetXXL(nn.Module):
+    def __init__(self):
+        super(ViT2NetXXL, self).__init__()
+        self.bn = nn.BatchNorm2d(3)
+        self.vit2 = ViT2(
+            image_size=(240, 320),
+            patch_size=40,
+            num_classes=3,
+            dim=256,
+            depth=8,
+            heads=16,
+            mlp_dim=256,
+        )
+
+    def forward(self, x):
+        x = self.bn(x)
+        x = self.vit2(x)
+        return x

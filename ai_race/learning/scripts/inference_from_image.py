@@ -62,6 +62,8 @@ def init_inference():
         model = vitnet.ViT2NetL()
     elif args.model == 'vit2xl':
         model = vitnet.ViT2NetXL()
+    elif args.model == 'vit2xxl':
+        model = vitnet.ViT2NetXXL()
     else:
         raise NotImplementedError()
     model.eval()
